@@ -24,6 +24,10 @@ import twitter4j.conf.ConfigurationBuilder
 
 class LoginActivity : AppCompatActivity() {
 
+    lateinit var twitter: Twitter
+    lateinit var twitterDialog: Dialog
+    var accToken: AccessToken? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,8 +51,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // ALL via https://johncodeos.com/how-to-add-twitter-login-button-to-your-android-app-using-kotlin/
-    lateinit var twitter: Twitter
-
     private fun getRequestToken() {
         GlobalScope.launch(Dispatchers.Default) {
             val builder = ConfigurationBuilder()
@@ -70,12 +72,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    lateinit var twitterDialog: Dialog
-    var accToken: AccessToken? = null
-
     // Show twitter login page in a dialog
     @SuppressLint("SetJavaScriptEnabled")
     fun setupTwitterWebviewDialog(url: String) {
+        print("In WebViewDialog")
         twitterDialog = Dialog(this)
         val webView = WebView(this)
         webView.isVerticalScrollBarEnabled = false
@@ -136,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     suspend fun getUserProfile() {
+        print("In getuserprofile")
         val usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
 
         //Twitter Id
@@ -169,6 +170,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     suspend fun isLoggedIn(): Boolean {
+        print("isLoggedIn")
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
         val accessToken = sharedPref.getString("oauth_token","")
         val accessTokenSecret = sharedPref.getString("oauth_token_secret", "")
