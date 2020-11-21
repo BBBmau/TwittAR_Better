@@ -7,6 +7,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+
     defaultConfig {
         applicationId "com.example.twitterar"
         minSdkVersion 24
@@ -47,11 +48,16 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    def camerax_version = "1.0.0-beta07"
-// CameraX core library using camera2 implementation
-    implementation "androidx.camera:camera-camera2:$camerax_version"
-// CameraX Lifecycle Library
-    implementation "androidx.camera:camera-lifecycle:$camerax_version"
-// CameraX View class
+    // CameraX core library using the camera2 implementation
+    def camerax_version = "1.0.0-beta12"
+    // The following line is optional, as the core library is included indirectly by camera-camera2
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha19"
+    // If you want to additionally use the CameraX Extensions library
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha19"
+
 }
